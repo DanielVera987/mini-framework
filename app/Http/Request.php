@@ -36,7 +36,7 @@ class Request
   {
     $controller = ucfirst($this->controller);
 
-    return "App\\Http\\{$controller}Controller";
+    return "App\\Http\\Controllers\\{$controller}Controller";
   }
 
   private function getMethod()
@@ -60,10 +60,10 @@ class Request
       {
         $response->send();
       } else {
-        throw new Exception('Error processing Request', 1);
+        throw new \Exception('Error processing Request', 1);
       }
-    } catch(Exception $e) {
-      echo "Details {$e->getMessage}";
+    } catch(\Exception $e) {
+      echo "Details {$e->getMessage()}";
     }
   }
 }
