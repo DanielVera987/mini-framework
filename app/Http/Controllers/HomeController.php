@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-class UserController
+class HomeController
 {
   public function index()
   {
-    echo 'Hola';
+    view('index.php');
   }
 }

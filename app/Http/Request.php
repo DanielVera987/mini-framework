@@ -21,7 +21,7 @@ class Request
   private function setController()
   {
     $this->controller = empty($this->arguments[1])
-        ? 'home'
+        ? 'Home'
         : $this->arguments[1];
   }
 
@@ -48,11 +48,14 @@ class Request
   {
     $controller = $this->getController();
     $method = $this->getMethod();
+    $clas = new $controller;
 
-    $response = call_user_func([
-      new $controller,
-      $method
-    ]);
+    $response = call_user_func_array(
+      $controller, 
+      [
+        $method
+      ]
+    );
 
     try
     {
