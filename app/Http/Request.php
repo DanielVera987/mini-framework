@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Controllers\HomeController;
 use Exception;
 
 class Request 
@@ -48,14 +49,12 @@ class Request
   {
     $controller = $this->getController();
     $method = $this->getMethod();
-    $clas = new $controller;
+    $obj = new $controller;
 
-    $response = call_user_func_array(
-      $controller, 
-      [
-        $method
-      ]
-    );
+    $response = call_user_func(array(
+      $obj, 
+      $method
+    ));
 
     try
     {

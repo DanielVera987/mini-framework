@@ -6,6 +6,6 @@ class HomeController
 {
   public function index()
   {
-    view('index.php');
+    return view('index');
   }
 }
