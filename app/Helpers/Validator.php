@@ -5,9 +5,21 @@ namespace App\Helpers;
 class Validator 
 {
 
-  public static function isPassword(string $pwd, int $min = 6, int $max = 9) : bool
+  public static function isPassword(string $pwd) : bool
   {
-    $pass = preg_match('/^[0-9]{$min-$max}$/', $pwd);
-    return $pass;
+    $pass = preg_match('/^[0-9a-zA-Z]{6,9}$/', $pwd);
+    return (bool) $pass;
+  }
+
+  public static function isEmail(string $email) : bool
+  {
+    $mail = filter_var($email, FILTER_VALIDATE_EMAIL);
+    return (bool) $mail;
+  }
+
+  public static function isEmpty(string $str) : bool
+  {
+    $str = empty(trim($str));
+    return (bool) $str;
   }
 }
