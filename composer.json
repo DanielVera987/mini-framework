@@ -15,7 +15,9 @@
             "App\\": "app/"
         },
         "files": [
-            "app/Helpers/Helpers.php"
+            "app/Helpers/Helpers.php",
+            "config/db.php",
+            "config/app.php"
         ]
     },
     "require-dev": {

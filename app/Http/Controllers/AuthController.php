@@ -13,4 +13,14 @@ class AuthController
   {
     return view('auth/register');
   }
+
+  public function login()
+  {
+
+  }
+
+  public function postRegister()
+  {
+
+  }
 }
