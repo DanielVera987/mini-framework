@@ -22,4 +22,22 @@ class Validator
     $str = empty(trim($str));
     return (bool) $str;
   }
+
+  public static function isString($str) : bool
+  {
+    $str = is_string($str);
+    return (bool) $str;
+  }
+
+  public static function isNumber($num) : bool
+  {
+    $num = is_numeric($num);
+    return (bool) $num;
+  }
+
+  public static function isURL($url) : bool
+  {
+    $url = filter_var($url, FILTER_VALIDATE_URL);
+    return (bool) $url;
+  }
 }

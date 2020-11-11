@@ -35,15 +35,30 @@ class ValidateTest extends TestCase
     $this->assertFalse($str); 
   }
 
-  //isString
+  public function test_string()
+  {
+    $str = Validator::isString('test');
+    $this->assertTrue($str);
 
-  //isNumber
+    $str = Validator::isString(12);
+    $this->assertFalse($str);
+  }
 
-  //isFloat
+  public function test_number()
+  {
+    $num = Validator::isNumber(12);
+    $this->assertTrue($num);
 
-  //isUrl
+    $num = Validator::isNumber('test');
+    $this->assertFalse($num);
+  }
 
-  //isIP
+  public function test_URL()
+  {
+    $url = Validator::isURL('http://example.com');
+    $this->assertTrue($url);
 
-  //isMAC
+    $url = Validator::isURL('test');
+    $this->assertFalse($url);
+  }
 }
