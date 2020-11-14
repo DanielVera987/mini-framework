@@ -8,7 +8,7 @@ use App\Database\Database as DB,
 
 class UserService 
 {
-  private static $_db;
+  private $_db;
 
   public function __construct()
   {
@@ -40,16 +40,18 @@ class UserService
   public function register(User $user)
   {
     try {
-      $sql = $this->_db->prepare('INSERT INTO user (nombre, email, password, salt) VALUE (:nombre, :email, :password, :salt)');
+      $sql = $this->_db->prepare('INSERT INTO user (nombre, email, password, salt, created_at) VALUE (:nombre, :email, :password, :salt, :created_at)');
 
-      $salt = random_bytes(8);
+      $encrypt = random_bytes(8);
+      $salt = base64_encode($encrypt);
       $pwd = password_hash($user->password . $salt, PASSWORD_DEFAULT);
 
       $sql->execute([
         "nombre" => $user->nombre,
         "email" => $user->email,
         "password" => $pwd,
-        "salt" => $salt
+        "salt" => $salt,
+        "created_at" => date('Y-m-d')
       ]);
 
       $id = $this->_db->lastInsertId();

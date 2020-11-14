@@ -7,7 +7,7 @@ use PDOException;
 
 class Database
 {
-  protected static $_db = '';
+  private static $_db = '';
 
   public static function connec()
   {
@@ -17,7 +17,7 @@ class Database
         $conn = new PDO(
           __DB__['HOST'],
           __DB__['USER'],
-          __DB__['PASSWORD']
+          __DB__['PASSWORD'],
         );
   
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

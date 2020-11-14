@@ -20,8 +20,8 @@ class Response
   {
     $view = $this->view; 
 
-    $content = file_get_contents(viewPath($view));
+    //$content = file_get_contents(viewPath($view));
     
-    require viewPath('layout/header');
+    require viewPath($view);
   }
 }
