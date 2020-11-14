@@ -48,7 +48,8 @@ class AuthController
                 : false;
     
     if(!$nombre && !$email && !$password) {
-      //error
+      $type= 'warning';
+      $msg = 'Error al registrarse';
     }
 
     $user = new User;
@@ -58,6 +59,15 @@ class AuthController
 
     $userService = new UserService;
     $result = $userService->register($user);
+
+    if(!is_numeric($result)) {
+      $type= 'warning';
+      $msg = 'Error al registrarse';
+    }else{
+      $type= 'success';
+      $msg = 'Registro exitoso';
+    }
     
+    return view('auth/register');
   }
 }

@@ -1,5 +1,6 @@
 <?php require_once(__DIR__ . '/../layout/header.php'); ?>
         <div class="mx-auto">
+        <?= (isset($type, $msg)) ? msg($type, $msg) : '' ?>
           <form action="<?= __URL__ ?>auth/postRegister" method="POST" class="form-signin">
             <h1 class="h3 mb-3 font-weight-normal">Register</h1>
             <label for="inputName" class="sr-only">Name</label>
