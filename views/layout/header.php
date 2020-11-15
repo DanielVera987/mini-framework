@@ -12,14 +12,20 @@
             <a href="/" class="navbar-brand h1">MINI</a>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a href="/" class="nav-link">Home</a>
+                    <a href="<?= __URL__ ?>" class="nav-link">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a href="auth" class="nav-link">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a href="auth/register" class="nav-link">Register</a>
-                </li>
+                <?php if(isset($_SESSION['user'])) : ?>
+                    <li class="nav-item">
+                        <a href="<?= __URL__ ?>auth/exit" class="nav-link">Sign out</a>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item">
+                        <a href="<?= __URL__ ?>auth" class="nav-link">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?= __URL__ ?>auth/register" class="nav-link">Register</a>
+                    </li>
+                <?php endif; ?>
             </ul>
         </div>
     </nav>

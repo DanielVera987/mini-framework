@@ -24,8 +24,10 @@ class AuthController
     $user = Validator::isEmail($_POST['email']);
     $pass = Validator::isPassword($_POST['password']);
 
-    if (!$user && !$pass) {
-      //Error
+    if (!$user || !$pass) {
+      $_SESSION['type'] = 'warning';
+      $_SESSION['msg'] = 'contraseña o email incorrectos';
+      return header("Location: " . __URL__ . "auth");
     }
 
     $user = new User; 
@@ -35,6 +37,15 @@ class AuthController
     $userService = new UserService;
     $result = $userService->login($user);
 
+    if(!$result){
+      $_SESSION['type'] = 'warning';
+      $_SESSION['msg'] = 'No existe el usuario';
+    }else{
+      $_SESSION['user'] = (array) $result['0'];
+      return header("Location: " . __URL__);
+    }
+
+    return header("Location: " . __URL__ . "auth");
   }
 
   public function postRegister()
@@ -47,9 +58,10 @@ class AuthController
                 ? $_POST['password']
                 : false;
     
-    if(!$nombre && !$email && !$password) {
-      $type= 'warning';
-      $msg = 'Error al registrarse';
+    if(!$nombre || !$email || !$password) {
+      $_SESSION['type'] = 'warning';
+      $_SESSION['msg'] = 'Error al registrarse';
+      return header("Location: " . __URL__ . "auth/register");
     }
 
     $user = new User;
@@ -61,13 +73,24 @@ class AuthController
     $result = $userService->register($user);
 
     if(!is_numeric($result)) {
-      $type= 'warning';
-      $msg = 'Error al registrarse';
+      $_SESSION['type'] = 'warning';
+      $_SESSION['msg'] = 'Error al registrarse';
     }else{
-      $type= 'success';
-      $msg = 'Registro exitoso';
+      $_SESSION['type'] = 'success';
+      $_SESSION['msg'] = 'Registro exitoso';
+    }
+
+    if($result == 1){
+      $_SESSION['type'] = 'info';
+      $_SESSION['msg'] = 'El usario ya existe';
     }
     
-    return view('auth/register');
+    return header("Location: " . __URL__ . "auth/register");
+  }
+
+  public function exit()
+  {
+    unset($_SESSION['user']);
+    header("Location: " . __URL__);
   }
 }

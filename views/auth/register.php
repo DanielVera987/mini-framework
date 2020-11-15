@@ -1,7 +1,7 @@
 <?php require_once(__DIR__ . '/../layout/header.php'); ?>
         <div class="mx-auto">
-        <?= (isset($type, $msg)) ? msg($type, $msg) : '' ?>
           <form action="<?= __URL__ ?>auth/postRegister" method="POST" class="form-signin">
+          <?= (isset($_SESSION['type'], $_SESSION['msg'])) ? msg($_SESSION['type'], $_SESSION['msg']) : '' ?>
             <h1 class="h3 mb-3 font-weight-normal">Register</h1>
             <label for="inputName" class="sr-only">Name</label>
             <input type="text" id="inputName" name="nombre" class="form-control mb-3" placeholder="Name" required="" autofocus="">

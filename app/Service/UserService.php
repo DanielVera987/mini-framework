@@ -18,16 +18,22 @@ class UserService
   public function login(User $user)
   {
     try {
-      $sql = $this->_db->prepare('SELECT * FROM user WHERE nombre = :email');
+      $sql = $this->_db->prepare('SELECT * FROM user WHERE email = :email');
       $sql->execute([
         "email" => $user->email
       ]);
       $result = $sql->fetchAll(PDO::FETCH_CLASS, 'App\\Models\\User');
+
+      if(!$result){
+        return false;
+      }
       
-      $pwd = $result['0']->password;
-      $hash = $pwd . $result['0']->salt;
+      $pwd = $user->password;
+      $password = $pwd . $result['0']->salt;
   
-      if (password_verify($user->password, $hash)) {
+      if (password_verify($password ,$result['0']->password)) {
+        unset($result['0']->password);
+        unset($result['0']->salt);
         return $result;
       }else{
         throw new \Exception("Contraseña invalida");
@@ -40,6 +46,16 @@ class UserService
   public function register(User $user)
   {
     try {
+      $sql = $this->_db->prepare('SELECT * FROM user WHERE email = :email');
+      $sql->execute([
+        "email" => $user->email
+      ]);
+      $result = $sql->fetchAll(PDO::FETCH_CLASS, 'App\\Models\\User');
+
+      if($result){
+        return 1;
+      }
+
       $sql = $this->_db->prepare('INSERT INTO user (nombre, email, password, salt, created_at) VALUE (:nombre, :email, :password, :salt, :created_at)');
 
       $encrypt = random_bytes(8);

@@ -20,9 +20,12 @@ if (!function_exists('msg'))
 {
   function msg($type = 'success', $msg)
   {
-    return "
+    $alert = "
     <div class='alert alert-{$type}' role='alert'>
         <strong>{$msg}</strong>
     </div>";
+    unset($_SESSION['type']);
+    unset($_SESSION['msg']);
+    return $alert;
   }
 }
