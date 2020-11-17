@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User,
-    App\Database\Database,    
-    App\Helpers\Validator,
-    App\Service\UserService;
+use App\Models\User;
+use App\Helpers\Validator;
+use App\Service\UserService;
+use App\Http\User\Application\UserValidate;
+use App\Http\User\Application\NewUser;
 
 class AuthController
 {
@@ -21,21 +22,11 @@ class AuthController
 
   public function login()
   {
-    $user = Validator::isEmail($_POST['email']);
-    $pass = Validator::isPassword($_POST['password']);
+    $validate = new UserValidate($_POST['email'], $_POST['password']);
+    $validate->login();
 
-    if (!$user || !$pass) {
-      $_SESSION['type'] = 'warning';
-      $_SESSION['msg'] = 'contraseña o email incorrectos';
-      return header("Location: " . __URL__ . "auth");
-    }
-
-    $user = new User; 
-    $user->email = $_POST['email'];
-    $user->password = $_POST['password'];
-    
-    $userService = new UserService;
-    $result = $userService->login($user);
+    $newUser = new NewUser($_POST['email'], $_POST['password']);
+    $result = $newUser->__invoke();
 
     if(!$result){
       $_SESSION['type'] = 'warning';
